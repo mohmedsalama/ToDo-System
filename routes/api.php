@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\TodoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\TodoController;
 
-Route::apiResource('todos', TodoController::class)->names('api.todos');
+Route::apiResource('todos', TodoController::class);

@@ -1,100 +1,76 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-center animate-fade-in">
-    <div class="col-lg-8 col-xl-7">
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
         
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-2.5 py-1 rounded-pill" style="font-size: 0.725rem;">
-                        <i class="bi bi-pencil-fill me-1"></i> New Item
-                    </span>
-                </div>
-                <h1 class="h3 fw-bold text-dark mb-1 brand-font">Create New Task</h1>
-                <p class="text-muted mb-0 small">Capture and schedule your next objective.</p>
+                <h2 class="fw-bold mb-1">Create Task</h2>
+                <p class="text-muted mb-0">Add a new task to your dashboard.</p>
             </div>
-            <a href="{{ route('todos.index') }}" class="btn btn-glass d-inline-flex align-items-center gap-1.5 text-decoration-none">
-                <i class="bi bi-arrow-left"></i>
-                <span>Back to Tasks</span>
+            <a href="{{ route('todos.index') }}" class="btn btn-light border text-muted fw-medium rounded-pill px-3">
+                <i class="bi bi-arrow-left me-1"></i> Back
             </a>
         </div>
 
-        <div class="glass-card p-4 p-md-5 shadow-sm">
-            <form action="{{ route('todos.store') }}" method="POST">
-                @csrf
-                
-                <div class="mb-4">
-                    <label for="title" class="form-label fw-bold text-dark small brand-font text-uppercase" style="letter-spacing: 0.04em;">
-                        Task Title <span class="text-danger">*</span>
-                    </label>
-                    <div class="position-relative">
-                        <input type="text" class="glass-input form-control form-control-lg @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required placeholder="e.g. Prepare financial forecast deck" autofocus>
-                    </div>
-                    @error('title')
-                        <div class="text-danger mt-1.5 small d-flex align-items-center gap-1">
-                            <i class="bi bi-exclamation-circle-fill"></i>
-                            <span>{{ $message }}</span>
+        <div class="card border-0 p-2 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <form action="{{ route('todos.store') }}" method="POST">
+                    @csrf
+                    
+                    <div class="mb-4">
+                        <label for="title" class="form-label fw-semibold text-main">Task Title <span class="text-danger">*</span></label>
+                        <div class="input-group input-group-lg shadow-sm rounded-3">
+                            <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-card-heading"></i></span>
+                            <input type="text" class="form-control border-start-0 ps-0 @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required placeholder="E.g., Complete the Q3 quarterly report">
                         </div>
-                    @enderror
-                </div>
-
-                <div class="mb-4">
-                    <label for="description" class="form-label fw-bold text-dark small brand-font text-uppercase" style="letter-spacing: 0.04em;">
-                        Description <span class="text-muted fw-normal text-capitalize">(Optional)</span>
-                    </label>
-                    <textarea class="glass-input form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Add key points, context, or links related to this task...">{{ old('description') }}</textarea>
-                    @error('description')
-                        <div class="text-danger mt-1.5 small d-flex align-items-center gap-1">
-                            <i class="bi bi-exclamation-circle-fill"></i>
-                            <span>{{ $message }}</span>
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="row mb-4">
-                    <div class="col-md-7">
-                        <label for="due_date" class="form-label fw-bold text-dark small brand-font text-uppercase" style="letter-spacing: 0.04em;">
-                            Due Date
-                        </label>
-                        <input type="datetime-local" class="glass-input form-control @error('due_date') is-invalid @enderror" id="due_date" name="due_date" value="{{ old('due_date') }}">
-                        @error('due_date')
-                            <div class="text-danger mt-1.5 small d-flex align-items-center gap-1">
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <span>{{ $message }}</span>
-                            </div>
+                        @error('title')
+                            <div class="text-danger mt-1 small"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
 
-                <div class="p-3 mb-4 rounded-3 border bg-light-subtle d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="rounded-circle bg-white border d-flex align-items-center justify-content-center text-primary" style="width: 38px; height: 38px;">
-                            <i class="bi bi-check2-circle fs-5"></i>
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-semibold text-main">Description</label>
+                        <textarea class="form-control shadow-sm @error('description') is-invalid @enderror" id="description" name="description" rows="5" placeholder="Provide any additional details or context...">{{ old('description') }}</textarea>
+                        @error('description')
+                            <div class="text-danger mt-1 small"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-7">
+                            <label for="due_date" class="form-label fw-semibold text-main">Due Date</label>
+                            <div class="input-group shadow-sm rounded-3">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-calendar-event"></i></span>
+                                <input type="datetime-local" class="form-control border-start-0 ps-0 @error('due_date') is-invalid @enderror" id="due_date" name="due_date" value="{{ old('due_date') }}">
+                            </div>
+                            @error('due_date')
+                                <div class="text-danger mt-1 small"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div>
-                            <label class="form-check-label fw-bold text-dark d-block mb-0 small" for="is_completed" style="cursor: pointer;">
-                                Mark Completed Immediately
+                    </div>
+
+                    <div class="mb-5 bg-light p-3 rounded-3 border">
+                        <div class="form-check form-switch d-flex align-items-center">
+                            <input type="hidden" name="is_completed" value="0">
+                            <input class="form-check-input fs-4 mt-0 me-3 shadow-none" type="checkbox" role="switch" id="is_completed" name="is_completed" value="1" {{ old('is_completed') ? 'checked' : '' }}>
+                            <label class="form-check-label fw-medium text-main" for="is_completed" style="cursor: pointer;">
+                                Mark this task as already completed
                             </label>
-                            <span class="text-muted" style="font-size: 0.775rem;">Set this task as done right away</span>
                         </div>
                     </div>
-                    <div class="form-check form-switch m-0">
-                        <input type="hidden" name="is_completed" value="0">
-                        <input class="form-check-input fs-4 m-0 shadow-none" type="checkbox" role="switch" id="is_completed" name="is_completed" value="1" {{ old('is_completed') ? 'checked' : '' }} style="cursor: pointer;">
+
+                    <hr class="text-muted opacity-25 mb-4">
+
+                    <div class="d-flex justify-content-end gap-3">
+                        <a href="{{ route('todos.index') }}" class="btn btn-light border px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-5">
+                            <i class="bi bi-check-lg me-1"></i> Save Task
+                        </button>
                     </div>
-                </div>
-
-                <hr class="border-light-subtle mb-4">
-
-                <div class="d-flex justify-content-end align-items-center gap-2">
-                    <a href="{{ route('todos.index') }}" class="btn btn-glass px-4">Cancel</a>
-                    <button type="submit" class="btn btn-gradient-primary px-4 py-2 d-inline-flex align-items-center gap-2">
-                        <i class="bi bi-check2 fs-5"></i>
-                        <span>Save Task</span>
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
